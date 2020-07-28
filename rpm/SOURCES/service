@@ -1,0 +1,11 @@
+[Unit]
+Description=@project.artifactId@
+After=syslog.target
+
+[Service]
+User=@project.artifactId@
+ExecStart=/usr/share/@project.artifactId@/@project.artifactId@.jar --spring.config.location=/usr/share/@project.artifactId@/application.properties
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target

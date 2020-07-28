@@ -1,0 +1,19 @@
+#!groovy
+
+node {
+    sh 'rm -rf *'
+
+    checkout scm
+
+    stage 'Build JAR'
+    sh 'mvn clean package'
+
+    stage 'Build RPM'
+    sh 'make -C target/rpm example-build'
+
+    stage 'Example Release'
+    sh 'make -C target/rpm example-release'
+
+    stage name: 'Example Deploy Int', concurrency: 1
+    sh 'make -C target/rpm example-deploy'
+}
